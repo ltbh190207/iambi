@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Huy Lê</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts: Inter (cho văn bản) & Fira Code (cho code tags) -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* Slate 900 */
+            color: #cbd5e1; /* Slate 300 */
+            min-height: 100vh;
+        }
+        
+        .font-mono {
+            font-family: 'Fira Code', monospace;
+        }
+
+        /* Nút bấm tương tác */
+        .btn-interactive {
+            transition: all 0.2s ease;
+        }
+        .btn-interactive:active {
+            transform: scale(0.97);
+        }
+
+        /* Tab Active States */
+        .tab-active {
+            color: #818cf8; /* Indigo 400 */
+            border-bottom-color: #818cf8;
+        }
+        .tab-inactive {
+            color: #94a3b8; /* Slate 400 */
+            border-bottom-color: transparent;
+        }
+        .tab-inactive:hover {
+            color: #cbd5e1;
+            border-bottom-color: #475569;
+        }
+
+        /* Tùy chỉnh Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+        /* Animation xuất hiện */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        
+        /* Hiệu ứng nổi cho Avatar */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+        .avatar-float { animation: float 4s ease-in-out infinite; }
+
+        /* Hiệu ứng Gõ chữ (Typing) */
+        .typing-text {
+            border-right: 2px solid #818cf8;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 2s steps(15, end), blink .75s step-end infinite;
+            display: inline-block;
+            vertical-align: bottom;
+        }
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink { from, to { border-color: transparent } 50% { border-color: #818cf8; } }
+
+        /* Hiệu ứng Click Ripple (Gợn sóng) */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(129, 140, 248, 0.4);
+            transform: scale(0);
+            animation: ripple-anim 0.6s linear;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        @keyframes ripple-anim {
+            to { transform: scale(4); opacity: 0; }
+        }
+
+        /* Hiệu ứng Shine (Ánh sáng lướt qua) cho Card Dự án */
+        .shine-card {
+            position: relative;
+            overflow: hidden;
+        }
+        .shine-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-20deg);
+            transition: all 0.7s;
+        }
+        .shine-card:hover::before {
+            left: 150%;
+        }
+
+        /* Ẩn spinner của thẻ input number */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type=number] { -moz-appearance: textfield; }
+    </style>
+</head>
+<body class="flex justify-center py-10 px-4 sm:px-6">
+
+    <!-- Container chính -->
+    <div class="max-w-3xl w-full space-y-8">
+        
+        <!-- HEADER -->
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-xl flex flex-col sm:flex-row items-center sm:items-start gap-6 relative overflow-hidden">
+            <!-- Background Decoration -->
+            <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
+
+            <!-- Avatar -->
+            <div class="relative shrink-0 avatar-float">
+                <img class="h-28 w-28 rounded-2xl border border-slate-700 object-cover shadow-lg" 
+                     src="https://i.ibb.co/jY6LmbS/506085796-2124907177976828-8696846871305360464-n.jpg" 
+                     alt="Avatar">
+                <div class="absolute -bottom-2 -right-2 w-5 h-5 bg-green-500 rounded-full border-4 border-slate-900" title="Online"></div>
+            </div>
+            
+            <!-- Info -->
+            <div class="text-center sm:text-left z-10">
+                <h1 class="text-3xl font-bold text-white tracking-tight">Huy Lê</h1>
+                <p class="text-indigo-400 font-mono text-sm mt-2 flex items-center justify-center sm:justify-start gap-2">
+                    <i class="fa-solid fa-code"></i> <span class="typing-text">Sinh viên</span>
+                </p>
+                <p class="text-slate-400 text-sm mt-3 leading-relaxed max-w-lg">
+                    Lười nhác là nguồn gốc của sự ngu dốt
+                </p>
+            </div>
+        </div>
+
+        <!-- NAVIGATION TABS -->
+        <div class="flex border-b border-slate-800 overflow-x-auto no-scrollbar">
+            <button onclick="switchTab('profile')" id="tab-profile" class="btn-interactive tab-active px-6 py-4 text-sm font-medium border-b-2 whitespace-nowrap flex items-center gap-2 transition-colors">
+                <i class="fa-regular fa-user"></i> Hồ Sơ
+            </button>
+            <button onclick="switchTab('projects')" id="tab-projects" class="btn-interactive tab-inactive px-6 py-4 text-sm font-medium border-b-2 whitespace-nowrap flex items-center gap-2 transition-colors">
+                <i class="fa-solid fa-cubes"></i> Dự Án C#
+            </button>
+            <button onclick="switchTab('utilities')" id="tab-utilities" class="btn-interactive tab-inactive px-6 py-4 text-sm font-medium border-b-2 whitespace-nowrap flex items-center gap-2 transition-colors">
+                <i class="fa-solid fa-wrench"></i> Tiện Ích NRO
+            </button>
+        </div>
+
+        <!-- KHUNG NỘI DUNG ĐỘNG -->
+        <div id="content-area" class="min-h-[400px]">
+            
+            <!-- TAB 1: HỒ SƠ & LIÊN HỆ -->
+            <div id="section-profile" class="space-y-6 animate-fade-in">
+                
+                <h2 class="text-lg font-semibold text-white mb-4">Kết nối với tôi</h2>
+                
+                <!-- Grid Liên kết Mạng Xã Hội -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Telegram -->
+                    <a href="https://t.me/iambi2007" target="_blank" class="btn-interactive flex items-center p-4 bg-slate-900 border border-slate-800 rounded-2xl hover:border-indigo-500/50 hover:bg-slate-800/50 group transition-all">
+                        <div class="w-10 h-10 rounded-full bg-[#0088cc]/10 flex items-center justify-center text-[#0088cc] group-hover:scale-110 transition-transform">
+                            <i class="fa-brands fa-telegram text-xl"></i>
+                        </div>
+                        <span class="ml-4 font-medium text-slate-200">Telegram</span>
+                    </a>
+
+                    <!-- Zalo -->
+                    <a href="https://zalo.me/84862085958" target="_blank" class="btn-interactive flex items-center p-4 bg-slate-900 border border-slate-800 rounded-2xl hover:border-blue-500/50 hover:bg-slate-800/50 group transition-all">
+                        <div class="w-10 h-10 rounded-full bg-[#0068ff]/10 flex items-center justify-center text-[#0068ff] group-hover:scale-110 transition-transform">
+                            <span class="font-bold text-lg">Z</span>
+                        </div>
+                        <span class="ml-4 font-medium text-slate-200">Zalo</span>
+                    </a>
+
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/_.iambi_1927/" target="_blank" class="btn-interactive flex items-center p-4 bg-slate-900 border border-slate-800 rounded-2xl hover:border-pink-500/50 hover:bg-slate-800/50 group transition-all">
+                        <div class="w-10 h-10 rounded-full bg-[#E1306C]/10 flex items-center justify-center text-[#E1306C] group-hover:scale-110 transition-transform">
+                            <i class="fa-brands fa-instagram text-xl"></i>
+                        </div>
+                        <span class="ml-4 font-medium text-slate-200">Instagram</span>
+                    </a>
+
+                    <!-- YouTube -->
+                    <a href="https://youtube.com/@iambi1902" target="_blank" class="btn-interactive flex items-center p-4 bg-slate-900 border border-slate-800 rounded-2xl hover:border-red-500/50 hover:bg-slate-800/50 group transition-all">
+                        <div class="w-10 h-10 rounded-full bg-[#ff0000]/10 flex items-center justify-center text-[#ff0000] group-hover:scale-110 transition-transform">
+                            <i class="fa-brands fa-youtube text-xl"></i>
+                        </div>
+                        <span class="ml-4 font-medium text-slate-200">YouTube</span>
+                    </a>
+
+                    <!-- Email -->
+                    <a href="mailto:iambi190207@gmail.com" class="btn-interactive flex items-center p-4 bg-slate-900 border border-slate-800 rounded-2xl hover:border-emerald-500/50 hover:bg-slate-800/50 group transition-all sm:col-span-2">
+                        <div class="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-500 group-hover:scale-110 transition-transform shrink-0">
+                            <i class="fa-solid fa-envelope text-xl"></i>
+                        </div>
+                        <span class="ml-4 font-medium text-slate-200 break-all select-all">iambi190207@gmail.com</span>
+                    </a>
+                </div>
+
+                <!-- Box QR & Donate -->
+                <div class="mt-8 bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col sm:flex-row items-center gap-6">
+                    <div class="bg-white p-2 rounded-xl shadow-inner shrink-0">
+                        <img src="https://i.ibb.co/x8CHfnb6/QR-techcombank.jpg" alt="QR Code" class="w-24 h-24 object-cover">
+                    </div>
+                    <div class="text-center sm:text-left">
+                        <h3 class="text-white font-medium mb-1"><i class="fa-solid fa-mug-hot text-indigo-400 mr-2"></i>Ủng hộ / Donate</h3>
+                        <p class="text-sm text-slate-400 mb-2">Nếu công cụ của tôi giúp ích cho bạn, hãy mời tôi một ly cà phê nhé!</p>
+                        <div class="inline-block bg-slate-800 rounded-lg px-4 py-2 text-sm font-mono text-slate-300">
+                           <!-- Bạn có thể ghi số tài khoản vào đây -->
+                        </div>
+                    </div>
+                </div>
+
+            </div> <!-- /Hồ sơ -->
+
+            <!-- TAB 2: DỰ ÁN (C# Winform) -->
+            <div id="section-projects" class="hidden space-y-4 animate-fade-in">
+                
+                <!-- Dự án 1 -->
+                <div class="group bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-indigo-500/50 transition-all shine-card cursor-pointer">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-white font-semibold text-lg flex items-center gap-2">
+                            <i class="fa-regular fa-folder-open text-indigo-400"></i> Tool Autochat
+                        </h3>
+                        <span class="bg-indigo-500/10 text-indigo-400 text-xs px-2 py-1 rounded font-medium">Completed</span>
+                    </div>
+                    <p class="text-sm text-slate-400 mb-4 leading-relaxed">Công cụ tự động gửi tin nhắn theo kịch bản tùy chỉnh, tự động rao bán/mua đồ trong game với độ trễ (delay) được thiết lập chính xác.</p>
+                    <div class="flex gap-2 font-mono text-[11px]">
+                        <span class="px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 border border-slate-700">C#</span>
+                        <span class="px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 border border-slate-700">WinForms</span>
+                    </div>
+                </div>
+
+                <!-- Dự án 2 -->
+                <div class="group bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-green-500/50 transition-all shine-card cursor-pointer">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-white font-semibold text-lg flex items-center gap-2">
+                            <i class="fa-regular fa-folder-open text-green-400"></i> Auto Kí Gửi Đậu
+                        </h3>
+                        <span class="bg-green-500/10 text-green-400 text-xs px-2 py-1 rounded font-medium">Completed</span>
+                    </div>
+                    <p class="text-sm text-slate-400 mb-4 leading-relaxed">Tiện ích tự động hóa quá trình thu hoạch và kí gửi đậu thần. Sử dụng phương pháp đọc bộ nhớ (Memory/API) giúp treo máy rảnh tay hiệu quả 24/7.</p>
+                    <div class="flex gap-2 font-mono text-[11px]">
+                        <span class="px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 border border-slate-700">C#</span>
+                        <span class="px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 border border-slate-700">WinForms</span>
+                    </div>
+                </div>
+
+                <!-- Dự án 3 -->
+                <div class="group bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-rose-500/50 transition-all shine-card cursor-pointer">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-white font-semibold text-lg flex items-center gap-2">
+                            <i class="fa-regular fa-folder-open text-rose-400"></i> Auto Kick Super Broly
+                        </h3>
+                        <span class="bg-rose-500/10 text-rose-400 text-xs px-2 py-1 rounded font-medium">Completed</span>
+                    </div>
+                    <p class="text-sm text-slate-400 mb-4 leading-relaxed">Hỗ trợ tự động nhận diện khu vực, phân tích chỉ số và kick Super Broly theo các điều kiện logic được thiết lập sẵn, tối ưu hóa quá trình săn boss.</p>
+                    <div class="flex gap-2 font-mono text-[11px]">
+                        <span class="px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 border border-slate-700">C#</span>
+                        <span class="px-2.5 py-1 bg-slate-800 rounded-md text-slate-300 border border-slate-700">WinForms</span>
+                    </div>
+                </div>
+
+            </div> <!-- /Dự án -->
+
+            <!-- TAB 3: TIỆN ÍCH NRO -->
+            <div id="section-utilities" class="hidden space-y-6 animate-fade-in">
+                
+                <!-- Tính CS -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+                    <h3 class="text-white font-medium mb-4 flex items-center gap-2">
+                        <div class="w-6 h-6 rounded-md bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-xs"><i class="fa-solid fa-arrow-up-right-dots"></i></div>
+                        Tính Chỉ Số Trang Bị
+                    </h3>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <input type="number" id="nrocs-base" placeholder="Nhập chỉ số gốc (VD: 1000)" class="flex-1 bg-slate-950 border border-slate-700 text-slate-200 rounded-xl px-4 py-3 outline-none focus:border-indigo-500 transition-colors placeholder-slate-600">
+                        <select id="nrocs-level" class="bg-slate-950 border border-slate-700 text-slate-200 rounded-xl px-4 py-3 outline-none focus:border-indigo-500 transition-colors w-full sm:w-32">
+                            <option value="1">Lên +1</option><option value="2">Lên +2</option>
+                            <option value="3">Lên +3</option><option value="4">Lên +4</option>
+                            <option value="5">Lên +5</option><option value="6">Lên +6</option>
+                            <option value="7">Lên +7</option><option value="8">Lên +8</option>
+                        </select>
+                        <button onclick="calcNROCS()" class="btn-interactive bg-indigo-500 hover:bg-indigo-400 text-white px-6 py-3 rounded-xl font-medium shadow-lg shadow-indigo-500/20 whitespace-nowrap">Tính Toán</button>
+                    </div>
+                    <div id="nrocs-result" class="hidden mt-4 p-4 bg-slate-950 rounded-xl border border-slate-800 text-sm font-mono text-slate-300 leading-loose"></div>
+                </div>
+
+                <!-- Tính Tiềm Năng -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+                    <h3 class="text-white font-medium mb-4 flex items-center gap-2">
+                        <div class="w-6 h-6 rounded-md bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs"><i class="fa-solid fa-bolt"></i></div>
+                        Tính Tiềm Năng Cần Dùng
+                    </h3>
+                    <div class="space-y-4">
+                        <select id="nrotn-planet" class="w-full bg-slate-950 border border-slate-700 text-slate-200 rounded-xl px-4 py-3 outline-none focus:border-amber-500 transition-colors">
+                            <option value="xd">Hành tinh: Xayda</option>
+                            <option value="nm">Hành tinh: Namek</option>
+                            <option value="td">Hành tinh: Trái Đất</option>
+                        </select>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            <input type="number" id="nrotn-hp" placeholder="Mục tiêu HP" class="bg-slate-950 border border-slate-700 text-slate-200 rounded-xl px-4 py-3 outline-none focus:border-amber-500 transition-colors placeholder-slate-600">
+                            <input type="number" id="nrotn-ki" placeholder="Mục tiêu KI" class="bg-slate-950 border border-slate-700 text-slate-200 rounded-xl px-4 py-3 outline-none focus:border-amber-500 transition-colors placeholder-slate-600">
+                            <input type="number" id="nrotn-sd" placeholder="Mục tiêu SĐ" class="bg-slate-950 border border-slate-700 text-slate-200 rounded-xl px-4 py-3 outline-none focus:border-amber-500 transition-colors placeholder-slate-600">
+                            <input type="number" id="nrotn-giap" placeholder="Mục tiêu Giáp" class="bg-slate-950 border border-slate-700 text-slate-200 rounded-xl px-4 py-3 outline-none focus:border-amber-500 transition-colors placeholder-slate-600">
+                        </div>
+                        <input type="number" id="nrotn-cm" placeholder="Mục tiêu Chí Mạng" class="w-full bg-slate-950 border border-slate-700 text-slate-200 rounded-xl px-4 py-3 outline-none focus:border-amber-500 transition-colors placeholder-slate-600">
+                        <button onclick="calcNROTN()" class="btn-interactive w-full bg-amber-500 hover:bg-amber-400 text-slate-900 px-6 py-3 rounded-xl font-bold shadow-lg shadow-amber-500/20">Tính Tổng Tiềm Năng</button>
+                    </div>
+                    <div id="nrotn-result" class="hidden mt-4 p-4 bg-slate-950 rounded-xl border border-slate-800 text-sm text-slate-300"></div>
+                </div>
+
+                <!-- Mốc Sức Mạnh -->
+                <details class="bg-slate-900 border border-slate-800 rounded-2xl group overflow-hidden">
+                    <summary class="font-medium p-5 cursor-pointer list-none flex justify-between items-center text-white outline-none hover:bg-slate-800/50 transition-colors">
+                        <div class="flex items-center gap-2">
+                            <div class="w-6 h-6 rounded-md bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs"><i class="fa-solid fa-chart-line"></i></div>
+                            Bảng Tham Khảo Mốc Sức Mạnh
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-slate-500 group-open:rotate-180 transition-transform"></i>
+                    </summary>
+                    <div class="border-t border-slate-800 overflow-x-auto bg-slate-950 p-1">
+                        <table class="w-full text-left text-[13px] text-slate-300 whitespace-nowrap">
+                            <thead class="text-slate-400 bg-slate-900/50">
+                                <tr>
+                                    <th class="py-3 px-4 font-medium rounded-tl-lg">Sức Mạnh</th>
+                                    <th class="py-3 px-2 font-medium">HP/KI</th>
+                                    <th class="py-3 px-2 font-medium">Sức Đánh</th>
+                                    <th class="py-3 px-2 font-medium">Giáp</th>
+                                    <th class="py-3 px-4 font-medium rounded-tr-lg">Chí Mạng</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800">
+                                <tr class="hover:bg-slate-800/30 transition-colors"><td class="py-3 px-4 text-emerald-400">17.999.999.999</td><td class="py-3 px-2">220.000</td><td class="py-3 px-2">11.000</td><td class="py-3 px-2">550</td><td class="py-3 px-4">5</td></tr>
+                                <tr class="hover:bg-slate-800/30 transition-colors"><td class="py-3 px-4 text-emerald-400">19.999.999.999</td><td class="py-3 px-2">240.000</td><td class="py-3 px-2">12.000</td><td class="py-3 px-2">600</td><td class="py-3 px-4">6</td></tr>
+                                <tr class="hover:bg-slate-800/30 transition-colors"><td class="py-3 px-4 text-emerald-400">24.999.999.999</td><td class="py-3 px-2">300.000</td><td class="py-3 px-2">15.000</td><td class="py-3 px-2">700</td><td class="py-3 px-4">7</td></tr>
+                                <tr class="hover:bg-slate-800/30 transition-colors"><td class="py-3 px-4 text-emerald-400">29.999.999.999</td><td class="py-3 px-2">350.000</td><td class="py-3 px-2">18.000</td><td class="py-3 px-2">800</td><td class="py-3 px-4">8</td></tr>
+                                <tr class="hover:bg-slate-800/30 transition-colors"><td class="py-3 px-4 text-emerald-400">39.999.999.999</td><td class="py-3 px-2">400.000</td><td class="py-3 px-2">20.000</td><td class="py-3 px-2">1.000</td><td class="py-3 px-4">9</td></tr>
+                                <tr class="hover:bg-slate-800/30 transition-colors"><td class="py-3 px-4 text-emerald-400">50.010.000.000</td><td class="py-3 px-2">450.000</td><td class="py-3 px-2">22.000</td><td class="py-3 px-2">1.200</td><td class="py-3 px-4">10</td></tr>
+                                <tr class="hover:bg-slate-800/30 transition-colors"><td class="py-3 px-4 text-emerald-400">60.010.000.000</td><td class="py-3 px-2">500.000</td><td class="py-3 px-2">24.000</td><td class="py-3 px-2">1.400</td><td class="py-3 px-4">11</td></tr>
+                                <tr class="hover:bg-slate-800/30 transition-colors"><td class="py-3 px-4 text-emerald-400">70.010.000.000</td><td class="py-3 px-2">525.000</td><td class="py-3 px-2">24.500</td><td class="py-3 px-2">1.500</td><td class="py-3 px-4">12</td></tr>
+                                <tr class="hover:bg-slate-800/30 transition-colors"><td class="py-3 px-4 text-emerald-400">80.010.000.000</td><td class="py-3 px-2">550.000</td><td class="py-3 px-2">25.000</td><td class="py-3 px-2">1.600</td><td class="py-3 px-4">13</td></tr>
+                                <tr class="hover:bg-slate-800/30 transition-colors"><td class="py-3 px-4 text-emerald-400">90.010.000.000</td><td class="py-3 px-2">575.000</td><td class="py-3 px-2">26.000</td><td class="py-3 px-2">1.700</td><td class="py-3 px-4">13</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </details>
+            </div> <!-- /Tiện ích -->
+
+        </div> <!-- /End Khung Nội Dung -->
+
+        <footer class="text-center text-sm text-slate-500 py-6 border-t border-slate-800/50">
+            &copy; 2026 Huy Lê. All rights reserved.
+        </footer>
+    </div>
+
+    <!-- SCRIPT ĐIỀU KHIỂN -->
+    <script>
+        // --- HIỆU ỨNG RIPPLE KHI CLICK CHUỘT ---
+        document.addEventListener('click', function(e) {
+            // Không áp dụng cho các ô input và thẻ select để tránh lỗi thao tác
+            if(e.target.closest('input') || e.target.closest('select')) return;
+
+            const ripple = document.createElement('div');
+            ripple.className = 'ripple';
+            
+            const size = 30; // Kích thước vòng tròn ban đầu
+            ripple.style.width = size + 'px';
+            ripple.style.height = size + 'px';
+            
+            // Tính toán vị trí click
+            ripple.style.left = (e.pageX - size/2) + 'px';
+            ripple.style.top = (e.pageY - size/2) + 'px';
+            
+            document.body.appendChild(ripple);
+            
+            // Xóa element sau khi hiệu ứng hoàn tất (0.6s)
+            setTimeout(() => ripple.remove(), 600);
+        });
+
+        // --- LOGIC CHUYỂN TAB ---
+        function switchTab(tabId) {
+            const tabs = ['profile', 'projects', 'utilities'];
+            
+            const activeClass = 'btn-interactive tab-active px-6 py-4 text-sm font-medium border-b-2 whitespace-nowrap flex items-center gap-2 transition-colors';
+            const inactiveClass = 'btn-interactive tab-inactive px-6 py-4 text-sm font-medium border-b-2 whitespace-nowrap flex items-center gap-2 transition-colors';
+
+            tabs.forEach(t => {
+                document.getElementById('section-' + t).classList.add('hidden');
+                document.getElementById('tab-' + t).className = inactiveClass;
+            });
+
+            document.getElementById('section-' + tabId).classList.remove('hidden');
+            document.getElementById('tab-' + tabId).className = activeClass;
+        }
+
+        // --- LOGIC TÍNH CHỈ SỐ NRO ---
+        function calcNROCS() {
+            const baseInput = document.getElementById('nrocs-base').value;
+            const level = parseInt(document.getElementById('nrocs-level').value);
+            const resDiv = document.getElementById('nrocs-result');
+
+            if(!baseInput || baseInput <= 0) {
+                resDiv.innerHTML = '<span class="text-rose-400">Vui lòng nhập chỉ số gốc hợp lệ!</span>';
+                resDiv.classList.remove('hidden');
+                return;
+            }
+
+            const baseCS = parseInt(baseInput);
+            let currentCS = baseCS;
+            let html = `<div class="mb-3 text-slate-400 border-b border-slate-800 pb-2">Chỉ số ban đầu: <span class="text-white font-medium">${baseCS.toLocaleString('vi-VN')}</span></div>`;
+            
+            for (let i = 1; i <= level; i++) {
+                const flooredCS = Math.floor(currentCS);
+                currentCS = flooredCS + (flooredCS * 0.1);
+                html += `<div class="flex justify-between items-center py-1">
+                            <span class="text-slate-400">Nâng cấp +${i}</span> 
+                            <span class="text-indigo-400 font-bold">${Math.floor(currentCS).toLocaleString('vi-VN')}</span>
+                        </div>`;
+            }
+            resDiv.innerHTML = html;
+            resDiv.classList.remove('hidden');
+        }
+
+        // --- LOGIC TÍNH TIỀM NĂNG NRO ---
+        const PLANET_CONFIG = {
+            'xd': { hp: { base: 100, firstTerm: 1100, d: 20 }, ki: { base: 100, firstTerm: 1100, d: 20 }, sd: { base: 15, firstTerm: 1500, d: 100 }, giap: { base: 0, firstTerm: 100000, d: 100000 }, chimang: { base: 0, first: 50000000, second: 250000000 } },
+            'nm': { hp: { base: 100, firstTerm: 1100, d: 20 }, ki: { base: 200, firstTerm: 1200, d: 20 }, sd: { base: 12, firstTerm: 1200, d: 100 }, giap: { base: 0, firstTerm: 100000, d: 100000 }, chimang: { base: 0, first: 50000000, second: 250000000 } },
+            'td': { hp: { base: 200, firstTerm: 1200, d: 20 }, ki: { base: 100, firstTerm: 1100, d: 20 }, sd: { base: 12, firstTerm: 1200, d: 100 }, giap: { base: 0, firstTerm: 100000, d: 100000 }, chimang: { base: 0, first: 50000000, second: 250000000 } }
+        };
+
+        function calculateArithmeticSum(a1, d, n) {
+            if (n <= 0) return 0;
+            return Math.floor((n / 2) * (2 * a1 + (n - 1) * d));
+        }
+
+        function calculateChiMang(targetPoints, configChiMang) {
+            if (targetPoints <= 0) return 0;
+            let total = 0; let current = configChiMang.first;
+            if (targetPoints >= 1) total += current;
+            if (targetPoints >= 2) { current = configChiMang.second; total += current; }
+            for (let i = 3; i <= targetPoints; i++) {
+                current = current * 5 + configChiMang.first;
+                total += current;
+            }
+            return Math.floor(total);
+        }
+
+        function calcNROTN() {
+            const planet = document.getElementById('nrotn-planet').value;
+            const config = PLANET_CONFIG[planet];
+            const resDiv = document.getElementById('nrotn-result');
+            const getVal = (id, baseVal) => { const val = document.getElementById(id).value; return val ? parseInt(val) : baseVal; };
+
+            const hp = getVal('nrotn-hp', config.hp.base);
+            const ki = getVal('nrotn-ki', config.ki.base);
+            const sd = getVal('nrotn-sd', config.sd.base);
+            const giap = getVal('nrotn-giap', config.giap.base);
+            const cm = getVal('nrotn-cm', config.chimang.base);
+
+            const hpPoints = Math.max(0, Math.floor((hp - config.hp.base) / config.hp.d));
+            const kiPoints = Math.max(0, Math.floor((ki - config.ki.base) / config.ki.d));
+            const sdPoints = Math.max(0, sd - config.sd.base);
+            const giapPoints = Math.max(0, giap - config.giap.base);
+            const cmPoints = Math.max(0, cm - config.chimang.base);
+
+            const hpTN = calculateArithmeticSum(config.hp.firstTerm, config.hp.d, hpPoints);
+            const kiTN = calculateArithmeticSum(config.ki.firstTerm, config.ki.d, kiPoints);
+            const sdTN = calculateArithmeticSum(config.sd.firstTerm, config.sd.d, sdPoints);
+            const giapTN = calculateArithmeticSum(config.giap.firstTerm, config.giap.d, giapPoints);
+            const cmTN = calculateChiMang(cmPoints, config.chimang);
+
+            const totalTN = hpTN + kiTN + sdTN + giapTN + cmTN;
+
+            if(totalTN === 0) {
+                resDiv.innerHTML = '<span class="text-rose-400">Không có thay đổi. Vui lòng nhập chỉ số mục tiêu lớn hơn chỉ số gốc của hành tinh.</span>';
+                resDiv.classList.remove('hidden');
+                return;
+            }
+
+            let html = `<div class="text-center mb-4 pb-4 border-b border-slate-800">
+                            <p class="text-sm text-slate-400 mb-1">Tổng Tiềm Năng Cần Chuẩn Bị</p>
+                            <p class="text-2xl font-bold text-amber-400">${totalTN.toLocaleString('vi-VN')} TN</p>
+                        </div>`;
+            
+            const addRow = (label, pts, val) => {
+                if (pts > 0) html += `<div class="flex justify-between items-center py-1"><span class="text-slate-400">${label} (+${pts} điểm)</span> <span class="text-white font-mono">${val.toLocaleString('vi-VN')}</span></div>`;
+            };
+
+            addRow('Sinh Lực (HP)', hpPoints, hpTN);
+            addRow('Năng Lượng (KI)', kiPoints, kiTN);
+            addRow('Sức Đánh', sdPoints, sdTN);
+            addRow('Giáp', giapPoints, giapTN);
+            addRow('Chí Mạng', cmPoints, cmTN);
+
+            resDiv.innerHTML = html;
+            resDiv.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
